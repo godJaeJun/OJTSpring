@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- BootStrap CDN -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<title>Member LIST</title>
+</head>
+<body>
+	<h3>Member LIST</h3>
+	<button class="btn btn-primary" style="float: right;"
+		onclick="location.href='/member/mem'">create</button>
+	<table class="table">
+		<tr>
+			<th>No</th>
+			<th>Name</th>
+			<th>Age</th>
+		</tr>
+		<tr th:each="member : ${list}">
+			<td th:text="${member.num}"></td>
+			<td>
+			<a th:href="@{'/member/' + ${member.num}}" th:text="${member.name}"></a>
+			</td>
+			<td th:text="${member.age}"></td>
+		</tr>
+	</table>
+</body>
+</html>

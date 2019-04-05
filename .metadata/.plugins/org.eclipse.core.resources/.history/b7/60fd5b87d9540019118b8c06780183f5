@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    $(document).ready(function(){    
+        $("h3").click(function(){
+            $.ajax({   
+                crossDomain: true,
+                async:false,
+                jsonp:"callback",
+                type:"GET",
+                dataType : "jsonp",
+                jsonpCallback: 'apiStatus',
+                url : "http://localhost:8081/member?callback=?",
+                success : function(response){ 
+                   console.log("success",response);
+                },
+                error : function(xhr, status, error) {
+                    alert("에러발생");
+                    alert(xhr);
+                    alert(status);
+                    alert(error);
+                    console.log(xhr);
+                    console.log(status);
+                   	console.log(error);
+              }
+            }); 
+        });
+    });
+</script>
+</head>
+<body>
+<center>
+<h3>로드 json</h3>
+<table>
+</table>
+</center>
+</body>
+</html>

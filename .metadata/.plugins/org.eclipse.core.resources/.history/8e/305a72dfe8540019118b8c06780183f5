@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Member</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+var uid = getParameterByName('num');
+$(document).ready(function(){    
+    $.ajax({
+        url : "http://localhost:8081/member/"+uid+"?callback=?",
+        crossDomain: true,
+        async:false,
+        jsonp:"callback",
+        type:"GET",
+        jsonpCallback: 'myCallback',
+        success : function(data){ 
+            $("table").html("<tr><th>No</th><th>Name</th><th>Age</th></tr>");
+            var show = "";
+            show += "<tr><td>"+data.num+"</td>";
+            show += "<td>"+data.name+"</td>";
+            show += "<td>"+data.age+"</td></tr>";
+            $("table").append(show);  
+            $("div").html("<form action='http://localhost:8081/member/mem/"+uid+"/del'>"+
+            		"<input type='submit' value='delete'></form>"+
+            		"<form action='http://localhost:8080/mem/"+uid+"/update/"
+            		+"?num="+uid+"'>"
+            		+"<input type='submit' value='update'></form>");
+        },
+        error : function(xhr, status, error) {
+            console.log(xhr);
+            console.log(status);
+           	console.log(error);
+      }
+});
+});
+</script>
+</head>
+<body>
+<h3>Member</h3>
+<table class="table">
+</table>
+<div style="padding: 30px;">
+<div class="form-group">
+</div>
+</div>
+</body>
+</html>

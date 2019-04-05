@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Member LIST</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    $(document).ready(function(){    
+            $.ajax({
+                url : "http://localhost:8081/member?callback=?",
+                crossDomain: true,
+                async:false,
+                jsonp:"callback",
+                type:"GET",
+                jsonpCallback: 'myCallback',
+                success : function(data){ 
+                    $("table").html("<tr><th>No</th><th>Name</th><th>Age</th></tr>");
+                    var show = "";
+                    $.each(data,function(index, item){
+                        show += "<tr><td>"+item.num+"</td>";
+                        show += "<td><a href='/mem/"+item.num+"?num="+item.num+"''>"+item.name+"</a></td>";
+                        show += "<td>"+item.age+"</td></tr>";
+                    });
+                    $("table").append(show);  
+                },
+                error : function(xhr, status, error) {
+                    alert("에러발생");
+                    alert(xhr);
+                    alert(status);
+                    alert(error);
+                    console.log(xhr);
+                    console.log(status);
+                   	console.log(error);
+              }
+        });
+    });
+</script>
+</head>
+<body>
+<h3>Member LIST</h3>
+	<button class="btn btn-primary" style="float: right;"
+		onclick="location.href='/mem'">create</button>
+	<table class="table">
+	</table>
+</body>
+</html>

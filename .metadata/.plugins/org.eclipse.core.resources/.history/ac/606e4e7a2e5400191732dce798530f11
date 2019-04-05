@@ -1,0 +1,18 @@
+package com.testweb.controller;
+ 
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+
+@Controller
+public class TestController {
+	@RequestMapping("/") // 가장 상위의 경로를 member로 잡아준다.
+	public ModelAndView member() throws Exception { // View를 반환해 주어야 하기때문에 반환타입을 ModelAndView로 해준다.
+		return new ModelAndView("index");			// member를 호출시 그 리스트를 가진 View를 반환해준다.
+		// mapping, 보내는 정보의 이름, 보내는 것
+	}
+}

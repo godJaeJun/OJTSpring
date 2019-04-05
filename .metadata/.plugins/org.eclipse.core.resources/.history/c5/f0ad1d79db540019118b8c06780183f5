@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    $(document).ready(function(){    
+        $("h3").click(function(){
+            $.ajax({
+                url : "http://localhost:8081/member?callback=?",
+                crossDomain: true,
+                async:false,
+                jsonp:"callback",
+                type:"GET",
+                jsonpCallback: 'myCallback',
+                success : function(data){ 
+                    $("table").html("<tr><th>번호</th><th>이름</th><th>나이</th><th>사는곳</th></tr>");
+                    var show = "";
+                    $.each(data,function(index, item){
+                        show += "<tr><td>"+item.num+"</td>";
+                        show += "<td>"+item.name+"</td>";
+                        show += "<td>"+item.age+"</td></tr>";
+                    });
+                    $("table").append(show);  
+                },
+                error : function(xhr, status, error) {
+                    alert("에러발생");
+                    alert(xhr);
+                    alert(status);
+                    alert(error);
+                    console.log(xhr);
+                    console.log(status);
+                   	console.log(error);
+              }
+            }); 
+        });
+    });
+</script>
+</head>
+<body>
+<h3>Member LIST</h3>
+	<button class="btn btn-primary" style="float: right;"
+		onclick="location.href='localhost:8081/member/mem'">create</button>
+	<table class="table">
+		<tr>
+			<th>No</th>
+			<th>Name</th>
+			<th>Age</th>
+		</tr>
+		<tr th:each="member : ${list}">
+			<td th:text="${member.num}"></td>
+			<td>
+			<a th:href="@{'/member/' + ${member.num}}" th:text="${member.name}"></a>
+			</td>
+			<td th:text="${member.age}"></td>
+		</tr>
+	</table>
+</body>
+</html>
